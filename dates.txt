@@ -1,0 +1,46 @@
+//time 
+ts -> short time format
+dl -> long date format
+ds -> short time format
+select to_char(sysdate,'TS') from dual;
+select to_char(sysdate,'DS') from dual;
+select to_char(sysdate,'AM') from dual;
+select to_char(sysdate,'PM') from dual;
+
+//week
+//week of month(goes from 1 to 4)
+select to_char(sysdate,'W') from dual;
+
+//week of year
+select to_char(sysdate,'ww') from dual;
+
+//hour
+select to_char(sysdate,'HH') from dual;
+select to_char(sysdate,'HH12') from dual;
+select to_char(sysdate,'HH24') from dual;
+
+
+//minutes
+select to_char(sysdate,'MI') from dual;
+
+//second
+select to_char(sysdate,'SS') from dual;
+
+//no of second passed midnight 12
+select to_char(sysdate,'SSSS') from dual;
+
+//year
+select to_char(sysdate,'yyyy') from dual;
+select to_char(sysdate,'yyy') from dual;
+select to_char(sysdate,'yy') from dual;
+select to_char(sysdate,'y') from dual;
+
+//month
+select to_char(sysdate,'mm') from dual;
+select to_char(sysdate,'mon') from dual;
+select to_char(sysdate,'month') from dual;
+
+//day
+select to_char(sysdate,'d') from dual; (sun=1,mon=2....sat=7)
+select to_char(sysdate,'dd') from dual; //day of month
+select to_char(sysdate,'month') from dual; //day of year

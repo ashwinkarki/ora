@@ -1,0 +1,11 @@
+
+//casting non number into number.but return zero if it is not no
+SELECT CAST('123.45$' as number
+default 0 on conversion error) from dual;
+
+//TO_DATE
+
+SELECT TO_DATE('28/02/2019' DEFAULT '01/02/2019' ON CONVERSION ERROR,'DD/MM/YYYY') FROM DUAL;
+
+//TO_NUMBER
+SELECT TO_NUMBER('123' default 0 on conversion error) FROM DUAL;

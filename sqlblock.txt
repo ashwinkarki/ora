@@ -1,0 +1,16 @@
+DECLARE
+ cursor emp_list is
+ SELECT City_name from OT.City;
+ 
+ v_name varchar2(100);
+  BEGIN
+  opeN emp_list;
+  loop
+  fetch emp_list into v_name;
+  dbms_output.put_line(v_name);
+  exit when emp_list%notfound;
+  end loop;
+  close emp_list;
+  
+  END;
+  /
