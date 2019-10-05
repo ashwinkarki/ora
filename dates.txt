@@ -44,3 +44,7 @@ select to_char(sysdate,'month') from dual;
 select to_char(sysdate,'d') from dual; (sun=1,mon=2....sat=7)
 select to_char(sysdate,'dd') from dual; //day of month
 select to_char(sysdate,'month') from dual; //day of year
+
+
+//altering the date format
+alter session set date nls_date_format='dd/mon/yyyy';

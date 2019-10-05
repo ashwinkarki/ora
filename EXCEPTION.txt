@@ -1,0 +1,48 @@
+//PRAGMA INIT EXCEPTION
+
+declare
+v_num NUMBER;
+e_value_greater_than_limit exception;
+PRAGMA EXCEPTION_INIT(e_value_greater_than_limit,-01438);
+BEGIN
+insert into ot.city(city_id,city_name) values (11111111111111111111111111111111111111,'asd');
+EXCEPTION WHEN  e_value_greater_than_limit THEN
+DBMS_OUTPUT.PUT_LINE('ERRROR IN SAVING');
+END;
+
+//NORMAL EXCPETION
+
+declare
+v_num NUMBER;
+
+BEGIN
+insert into ot.city(city_id,city_name) values (11111111111111111111111111111111111111,'asd');
+V_NUM :=1/0;
+EXCEPTION 
+    WHEN DUP_VAL_ON_INDEX THEN
+    DBMS_OUTPUT.PUT_LINE('DUPLICARTE EXCEPTION');
+    
+      WHEN ZERO_DIVIDE THEN
+    DBMS_OUTPUT.PUT_LINE('INFINITE EXCEPTION');
+    
+       WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('OTHERS EXCEPTION');
+END;
+
+
+//SQLERRM AND SQLCODE
+
+declare
+v_num NUMBER;
+
+BEGIN
+
+V_NUM :=1/0;
+EXCEPTION 
+
+    
+      WHEN ZERO_DIVIDE THEN
+    DBMS_OUTPUT.PUT_LINE('SQLEERM'||SQLERRM );
+      DBMS_OUTPUT.PUT_LINE('SQLEERM'||SQLCODE );
+   
+END;
