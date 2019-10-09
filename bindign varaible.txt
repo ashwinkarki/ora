@@ -1,0 +1,3 @@
+set autoprint on;
+variable v_bind varchar2(20);
+exec :v_bind :='ashwin';

@@ -1,0 +1,83 @@
+//normal trigger
+create table OT.superheros(
+sh_name varchar2(200)
+);
+
+create or replace trigger Ot.tg_user
+before insert on OT.temp_test
+for each row
+declare
+v_user varchar2(20);
+begin
+select user into v_user from dual;
+insert into OT.superheros(sh_name) values(v_user);
+dbms_output.put_line('you just saved the data Mr.'||v_user);
+end;
+
+//dropping trigger
+DROP TRIGGER ot.tg_user; 
+
+//ALL TRIGGERS
+
+CREATE OR REPLACE TRIGGER OT.USER_TG
+BEFORE INSERT OR UPDATE OR DELETE ON OT.TEMP_TEST
+FOR EACH ROW
+ENABLE
+DECLARE
+V_USER VARCHAR2(20);
+BEGIN
+SELECT USER INTO V_USER FROM DUAL;
+IF INSERTING THEN
+DBMS_OUTPUT.PUT_LINE('ONE ROW IS INSERTED MR.'||V_USER);
+ELSIF DELETING THEN
+DBMS_OUTPUT.PUT_LINE('ONE ROW IS DELETED MR.'||V_USER);
+ELSIF UPDATING THEN
+DBMS_OUTPUT.PUT_LINE('ONE ROW IS UPDATED MR.'||V_USER);
+END IF;
+END;
+
+
+//ddl trigger
+CREATE TABLE OT.schema_audit
+  (
+    ddl_date       DATE,
+    ddl_user       VARCHAR2(15),
+    object_created VARCHAR2(15),
+    object_name    VARCHAR2(15),
+    ddl_operation  VARCHAR2(15)
+  );
+  
+
+CREATE OR REPLACE TRIGGER db_audit_tr 
+AFTER DDL ON DATABASE
+BEGIN
+    INSERT INTO schema_audit VALUES (
+sysdate, 
+sys_context('USERENV','CURRENT_USER'), 
+ora_dict_obj_type, 
+ora_dict_obj_name, 
+ora_sysevent);
+END;
+/
+
+//TRIGGER OF MAKING BACKUP OF ORIGINAL TABLE
+CREATE OR REPLACE TRIGGER OT.TR_REGIONS 
+BEFORE INSERT OR UPDATE OR DELETE ON OT.REGIONS 
+REFERENCING OLD AS OLD NEW AS NEW
+FOR EACH ROW
+DECLARE
+BEGIN
+IF INSERTING THEN
+INSERT INTO OT.BACKUP_REGION (REGION_ID,REGION_NAME) VALUES (:NEW.REGION_ID,:NEW.REGION_NAME);
+
+END IF;
+IF UPDATING THEN
+UPDATE OT.BACKUP_REGION SET REGION_NAME = :NEW.REGION_NAME WHERE REGION_ID = :OLD.REGION_ID;
+END IF;
+
+IF DELETING THEN
+DELETE FROM  OT.BACKUP_REGION  WHERE REGION_ID = :OLD.REGION_ID;
+
+END IF;
+END;
+/

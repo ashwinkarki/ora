@@ -1,0 +1,5 @@
+select id,
+name,
+age,
+rank() over(order by age asc),
+dense_rank() over(order by age asc)  from ot.person;

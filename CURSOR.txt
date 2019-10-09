@@ -1,0 +1,133 @@
+set serveroutput on
+DECLARE 
+    CURSOR CUR_NAME_LIST IS
+    SELECT CITY_NAME FROM OT.CITY;
+    
+    V_NAME VARCHAR2(20);
+    
+BEGIN
+    OPEN CUR_NAME_LIST;
+    LOOP
+    FETCH CUR_NAME_LIST INTO V_NAME;
+    DBMS_OUTPUT.PUT_LINE(V_NAME);
+    EXIT WHEN CUR_NAME_LIST%NOTFOUND;
+    END LOOP;
+    CLOSE CUR_NAME_LIST;
+
+END;
+/
+
+
+//implicit cursor
+set serveroutput on
+DECLARE 
+
+    V_NAME VARCHAR2(20);
+       
+BEGIN
+   SELECT city_id into V_NAME FROM OT.CITY where city_id=1;
+    DBMS_OUTPUT.PUT_LINE(V_NAME);
+
+END;
+/
+
+
+//for in cursor
+set serveroutput on
+DECLARE 
+    CURSOR CUR_NAME_LIST IS
+    SELECT city_id,city_name FROM OT.CITY;
+    
+    V_NAME VARCHAR2(20);
+    
+BEGIN
+  for I in CUR_NAME_LIST
+  loop
+dbms_output.put_line(i.city_name);
+dbms_output.put_line(i.city_id);
+  end loop;
+END; 
+/
+
+
+//cursor using rowtype
+
+set serveroutput on
+DECLARE 
+    CURSOR CUR_NAME_LIST IS
+    SELECT * FROM OT.CITY;
+
+    V_CITY OT.CITY%ROWTYPE;
+
+BEGIN
+    OPEN CUR_NAME_LIST;
+    LOOP
+    FETCH CUR_NAME_LIST INTO V_CITY;
+    DBMS_OUTPUT.PUT_LINE(V_CITY.city_ID || ' - ' || V_CITY.city_NAME );
+    EXIT WHEN CUR_NAME_LIST%NOTFOUND;
+    END LOOP;
+    CLOSE CUR_NAME_LIST;
+
+END;
+/
+
+//cursor using INTO
+
+set serveroutput on
+DECLARE 
+  
+    V_CITY OT.CITY%ROWTYPE;
+
+BEGIN
+
+ SELECT *
+  INTO V_CITY
+  FROM OT.CITY where city_id=1;
+
+  
+    DBMS_OUTPUT.PUT_LINE(V_CITY.city_ID );
+    DBMS_OUTPUT.PUT_LINE(V_CITY.city_name );
+
+
+END;
+/
+
+//for loop in cursor
+
+declare 
+v_id number;
+v_city varchar2(255);
+cursor cur is
+select city_id,city_name from ot.city where city_id>1;
+
+begin
+
+for i in cur
+loop
+dbms_output.put_line(i.city_id);
+
+dbms_output.put_line(i.city_name);
+end loop;
+end;
+/
+
+//for loop for select * from
+
+
+set serveroutput on
+DECLARE 
+    CURSOR CUR_NAME_LIST IS
+    SELECT * FROM OT.CITY;
+
+    V_CITY OT.CITY%ROWTYPE;
+
+BEGIN
+   for i in CUR_NAME_LIST
+   loop
+   v_city :=i;
+   dbms_output.put_line(v_city.city_id);
+   end loop;
+END;
+/
+
+

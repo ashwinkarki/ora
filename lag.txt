@@ -1,0 +1,1 @@
+select order_date,lag(order_date) over(order by order_date) d1 from ot.orders;

@@ -46,3 +46,21 @@ EXCEPTION
       DBMS_OUTPUT.PUT_LINE('SQLEERM'||SQLCODE );
    
 END;
+
+//user defined excpetion
+
+declare
+v1 number := 10;
+v2 number :=0;
+v_result number;
+v_excp exception;
+
+begin
+if v2=0 then
+raise v_excp;
+v_result=v1/v2;
+end if;
+exception when v_excp then
+dbms_output.put_line('user defined excpetion raised');
+end;
+/

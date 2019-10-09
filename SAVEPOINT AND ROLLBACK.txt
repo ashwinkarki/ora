@@ -1,0 +1,14 @@
+SAVEPOINT s2;
+
+create table ot.hawa(
+id number
+ );
+
+insert into ot.hawa values('1');
+
+update ot.hawa set id=2 where id=1;
+
+ROLLBACK;
+
+IF I DO COMMIT AT MIDDLE IT WILL GOTO THE POINT BEFOR COMMIT;
+

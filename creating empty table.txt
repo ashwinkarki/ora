@@ -1,0 +1,2 @@
+create table ot.temp_test as
+select * from ot.test where 1=2;

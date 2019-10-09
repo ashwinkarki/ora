@@ -1,0 +1,15 @@
+SELECT sales.customer_id, 
+       sales.sales_date, 
+       sales.order_id, 
+       sales.product_id, 
+       product.product_name, 
+       salesperson.job_title, 
+       customer.first_name 
+FROM   inventory.sales 
+       INNER JOIN inventory.product 
+               ON sales.product_id = product.product_id 
+       LEFT OUTER JOIN inventory.salesperson 
+                    ON sales.salesperson_id = salesperson.salesperson_id 
+       INNER JOIN inventory.customer 
+               ON sales.customer_id = customer.customer_id 
+ORDER  BY sales.customer_id; 
