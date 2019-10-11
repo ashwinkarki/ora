@@ -1,0 +1,1 @@
+select to_date('03/09/2011','MM/DD/YYYY') -to_date('03/09/2010','MM/DD/YYYY') "Days" from dual;

@@ -1,0 +1,28 @@
+CREATE TABLE ot.trainer
+  ( 
+    full_name VARCHAR2(20)
+  );
+  
+  CREATE TABLE ot.subject
+  ( 
+    subject_name VARCHAR2(15)
+  );
+
+INSERT INTO ot.trainer VALUES ('Manish Sharma');
+INSERT INTO ot.subject VALUES ('Oracle');
+
+CREATE VIEW ot.vw_rebellionrid AS
+SELECT full_name, subject_name FROM ot.trainer,ot.subject;
+
+CREATE OR REPLACE TRIGGER ot.tr_Io_Insert
+INSTEAD OF INSERT ON ot.vw_rebellionrid
+FOR EACH ROW
+BEGIN
+  INSERT INTO trainer (full_name) VALUES (:new.full_name);
+  INSERT INTO subject (subject_name) VALUES (:new.subject_name);
+END;
+/
+
+INSERT INTO ot.vw_rebellionrid VALUES ('ASHWIN','HAWA');
+
+

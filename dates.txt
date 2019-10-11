@@ -48,3 +48,12 @@ select to_char(sysdate,'month') from dual; //day of year
 
 //altering the date format
 alter session set date nls_date_format='dd/mon/yyyy';
+
+//moths between
+SELECT MONTHS_BETWEEN('01-JAN-2020','01-JAN-2019') FROM DUAL;
+
+//add months
+SELECT ADD_MONTHS('01-JAN-2010',12) FROM  DUAL;
+
+//last day
+SELECT LAST_DAY('01-JAN-2010') FROM DUAL;

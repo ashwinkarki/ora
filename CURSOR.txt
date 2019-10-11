@@ -130,4 +130,18 @@ BEGIN
 END;
 /
 
+//sql in for statement
+DECLARE 
+   
+
+    V_CITY OT.CITY%ROWTYPE;
+
+begin
+  for v_data in (select * from ot.city_vw) 
+  loop
+    dbms_output.put_line(v_data.city_id);
+    dbms_output.put_line(v_data.city_name);
+  end loop;
+end;
+
 
