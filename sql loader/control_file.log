@@ -1,0 +1,8 @@
+
+SQL*Loader: Release 11.2.0.1.0 - Production on Fri Oct 11 10:09:03 2019
+
+Copyright (c) 1982, 2009, Oracle and/or its affiliates.  All rights reserved.
+
+SQL*Loader-128: unable to begin a session
+ORA-01045: user STU lacks CREATE SESSION privilege; logon denied
+

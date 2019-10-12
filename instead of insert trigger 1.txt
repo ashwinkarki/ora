@@ -1,0 +1,31 @@
+CREATE OR REPLACE TRIGGER OT.trr_ins_prod
+INSTEAD OF INSERT ON ot.vw_product_cat
+FOR EACH ROW
+BEGIN
+  INSERT INTO OT.PRODUCT_CATEGORIES ( CATEGORY_ID,  CATEGORY_NAME) VALUES (:NEW.CATEGORY_ID,:NEW.CATEGORY_NAME);
+  INSERT INTO OT.PRODUCTS (PRODUCT_ID,PRODUCT_NAME ,DESCRIPTION,STANDARD_COST ,LIST_PRICE ,CATEGORY_ID) 
+  VALUES (:new.PRODUCT_ID,:NEW.PRODUCT_NAME,:NEW.DESCRIPTION,:NEW.STANDARD_COST,:NEW.LIST_PRICE,:NEW.CATEGORY_ID);
+END;
+/
+
+
+
+CREATE OR REPLACE  VIEW OT.VW_PRODUCT_CAT
+
+AS
+   SELECT p.product_id,
+          p.product_name,
+          p.description,
+          p.standard_cost,
+          p.list_price,
+          p.category_id,
+          pc.category_name
+     FROM ot.products p
+          INNER JOIN ot.product_categories pc
+             ON p.category_id = pc.category_id;
+             
+             
+             select * from ot.vw_product_cat;
+             
+             
+insert into ot.vw_product_cat values (289,'gum','gum',2.2,5.5,6,'stationery');             

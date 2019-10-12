@@ -1,0 +1,6 @@
+name,job,dept_no
+ashwin,eng,12
+arun,mech,10
+aakash,teacher,12
+aakash,teacher,14
+aakash,teacher,16
