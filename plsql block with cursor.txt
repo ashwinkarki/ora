@@ -1,0 +1,10 @@
+declare
+cursor cur is 
+select city_id,city_name from ot.city;
+begin
+for i in cur
+loop
+dbms_output.put_line(i.city_id);
+dbms_output.put_line(i.city_name);
+end loop;
+end;
