@@ -1,0 +1,7 @@
+declare
+v_place varchar2(30):='&enter_place';
+begin
+if v_place ='ktm' then
+dbms_output.put_line('city is'||v_place);
+end if;
+end;

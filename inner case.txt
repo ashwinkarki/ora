@@ -1,0 +1,20 @@
+SELECT emp_id, 
+       emp_name, 
+       dob, 
+       dept_id, 
+       join_date, 
+       leave_date, 
+       line1, 
+       line2, 
+       salary, 
+       CASE WHEN leave_date IS NULL 
+       THEN 
+          CASE WHEN sysdate-join_date > 5 THEN salary*1.5 
+               WHEN sysdate-join_date < 3 THEN salary*1.25 
+               WHEN sysdate-join_date < 1 THEN salary*1.01 
+               ELSE salary 
+          END -- upgraded_salary -- issue in your query 
+       END upgraded_salary -- alias name shoild be here
+FROM   offc.employee ;
+
+
