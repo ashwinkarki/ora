@@ -1,0 +1,25 @@
+CREATE OR REPLACE PROCEDURE OFFC.TEMP_SEL(DATA1 VARCHAR2) IS
+
+    VAR1 VARCHAR2(4000);
+
+    TYPE T_RESULT IS TABLE OF offc.employee%ROWTYPE;
+--  defined the new type based on the structure of table TEMP from schema OFFC
+
+    v_result T_RESULT;
+--  define a variable of that type.
+
+BEGIN
+    var1:='select * from  offc.employee';
+
+    EXECUTE IMMEDIATE VAR1 BULK COLLECT INTO v_result;
+--  collect he result into the new variable
+
+    FOR I IN 1 ..v_result.count
+    LOOP
+        dbms_output.put_line(v_result(i).emp_id);
+    end loop;
+
+
+ end;
+ 
+ exec  OFFC.TEMP_SEL('a');

@@ -1,0 +1,7 @@
+create or replace procedure offc.temp(data1 varchar2) is
+   var1 varchar2(4000);
+BEGIN
+   var1:='create table offc.temp'||data1||'(
+          id number)';
+   EXECUTE IMMEDIATE var1;
+end;

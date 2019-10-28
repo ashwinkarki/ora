@@ -1,0 +1,35 @@
+INSERT INTO offc.vh_emp 
+            (emp_id, 
+             emp_name, 
+             dob, 
+             join_date, 
+             leave_date, 
+             Salary,  -- this
+             dept_name, -- this
+             address_one, 
+             address_two,
+             manager_name 
+             ) 
+SELECT e.emp_id       EMP_ID, 
+       e.emp_name     EMP_NAME, 
+       e.dob          DOB, 
+       e.join_date    JOIN_DATE, 
+       CASE 
+         WHEN e.leave_date IS NULL THEN Trunc(sysdate) 
+         ELSE e.leave_date 
+       END            AS LEAVE_DATE, 
+       e.salary / 100 SALARY, 
+       d.dept_name    DEPT_NAME, 
+       one.addr_name  ADDRESS_ONE, 
+       two.addr_name  ADDRESS_TWO, 
+       b.emp_name     AS MANAGER_NAME 
+FROM   offc.employee e 
+       LEFT JOIN offc.department d 
+              ON e.dept_id = d.dept_id 
+       LEFT JOIN offc.add_line_one one 
+              ON e.line1 = one.addr_id_one 
+       LEFT JOIN offc.add_line_two two 
+              ON e.line2 = two.addr_id_two 
+       LEFT OUTER JOIN (SELECT * 
+                        FROM   offc.employee) b 
+                    ON e.manager_id = b.emp_id; 
