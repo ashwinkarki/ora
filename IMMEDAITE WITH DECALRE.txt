@@ -1,0 +1,10 @@
+
+declare
+var1 varchar2(4000);
+BEGIN
+   var1:='create table offc.TEMP_PAYOR_TAB(
+          id number,
+          NAME VARCHAR(255)
+          )';
+   EXECUTE IMMEDIATE var1;
+end;
