@@ -1,3 +1,26 @@
+DECLARE 
+    CURSOR c_data IS 
+      SELECT * 
+      FROM   employee; 
+    tmp_event c_data%ROWTYPE; 
+BEGIN 
+    OPEN c_data; 
+
+    LOOP 
+        FETCH c_data INTO tmp_event; 
+
+        EXIT WHEN c_data%NOTFOUND; 
+
+        dbms_output.Put_line(tmp_event.id); 
+    END LOOP; 
+
+    CLOSE c_data; 
+END; 
+
+/ 
+
+
+
 set serveroutput on
 DECLARE 
     CURSOR CUR_NAME_LIST IS

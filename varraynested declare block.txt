@@ -1,0 +1,109 @@
+set serveroutput on;
+declare 
+v_numbers number_nt := number_nt();
+begin
+for i in 1..5 
+loop
+v_numbers.extend;
+v_numbers(v_numbers.count) :=i*2;
+end loop;
+
+for i in 1..v_numbers.count
+loop
+dbms_output.put_line(v_numbers(i));
+end loop;
+end;
+
+-----------varray
+DECLARE
+    TYPE inBlock_vry IS VARRAY (5) OF NUMBER;
+    
+    vry_obj inBlock_vry  :=  inBlock_vry();
+    
+    BEGIN
+    vry_obj.EXTEND(1); 
+    vry_obj(1):= 10*2;
+    vry_obj(2) :=10*3;
+    DBMS_OUTPUT.PUT_LINE(vry_obj(1)); 
+        DBMS_OUTPUT.PUT_LINE(vry_obj(2));       
+END;
+/
+
+
+------varrray
+
+DECLARE
+    TYPE inBlock_vry IS VARRAY (5) OF NUMBER;
+    
+    vry_obj inBlock_vry  :=  inBlock_vry();
+
+BEGIN
+FOR i IN 1 .. vry_obj.limit
+LOOP
+    vry_obj.EXTEND;
+    vry_obj (i):= 10*i;    
+    DBMS_OUTPUT.PUT_LINE (vry_obj (i));    
+END LOOP;
+END;
+/
+
+--varrray
+
+DECLARE
+    TYPE inBlock_vry IS VARRAY (5) OF NUMBER;
+    
+    vry_obj inBlock_vry  :=  inBlock_vry(45,53,25,2,5);
+
+BEGIN
+FOR i IN 1 .. vry_obj.limit
+LOOP
+    DBMS_OUTPUT.PUT_LINE (vry_obj (i));    
+END LOOP;
+END;
+/
+
+
+----------nestedtabel
+DECLARE
+  TYPE my_nested_table   IS TABLE OF ot.employee.ename%Type;
+  var_nt  my_nested_table :=  my_nested_table ();
+  
+  cursor cur is 
+  select ename from ot.employee;
+  
+BEGIN
+ for i in cur
+ loop
+ var_nt.extend;
+ var_nt(var_nt.last) := i.ename;
+ end loop;
+ 
+ FOR l_index IN var_nt.FIRST..var_nt.LAST 
+    LOOP
+        dbms_output.put_line(var_nt(l_index));
+    END LOOP;
+END;
+/
+
+
+------------nestdtable
+
+DECLARE
+  TYPE my_nested_table   IS TABLE OF ot.employee.ename%Type;
+  var_nt  my_nested_table :=  my_nested_table ();
+  
+  cursor cur is 
+  select ename from ot.employee;
+  
+BEGIN
+ for i in cur
+ loop
+ var_nt.extend;
+ var_nt(var_nt.last) := i.ename;
+ end loop;
+ 
+END;
+/
+
+
+
