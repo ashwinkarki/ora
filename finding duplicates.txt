@@ -1,0 +1,21 @@
+--nyc
+select pc.id, pc.payor_name
+from offc.payor_collec pc
+where exists (select 1
+              from offc.payor_collec pc2
+              where pc2.id = pc.id and pc2.payor_name <> pc.payor_name
+             )
+
+--nyc
+select id, payor_name, cnt as count_
+from (
+    select id, payor_name, 
+           count(1) over (partition by id) as cnt
+    from offc.payor_collec) t1
+Where cnt > 1;
+
+
+select ID, count(*)
+from offc.payor_collec
+group by ID
+having count(distinct PAYOR_NAME) > 1 ;
