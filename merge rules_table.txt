@@ -1,0 +1,21 @@
+5 ktm
+6 ktm 
+
+output
+5 ktm
+5 ktm
+
+MERGE INTO offc.payor_collec A
+USING (select * from offc.payor_collec where payor_name in( 
+select payor_name from offc.payor_collec group by payor_name having count(distinct id)>=2)) B
+ON (A.payor_name=B.payor_name and a.rowid>b.rowid)
+WHEN MATCHED THEN
+UPDATE SET A.id=B.id
+
+4 metlife
+4 aetnau
+
+output
+4 aetnau
+4 aetnau
+
