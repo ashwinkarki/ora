@@ -1,0 +1,317 @@
+1.COUNT-->You can use COUNT ( ) function to compute total number of elements stored into a collection such as Nested table.
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE my_nested_table IS TABLE OF number;
+    var_nt my_nested_table := my_nested_table (9,18,27,36,45,54,63,72,81,90);
+BEGIN
+    DBMS_OUTPUT.PUT_LINE ('The Size of the Nested Table is ' ||var_nt.count);
+END;
+/
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE my_nested_table IS TABLE OF number;
+    var_nt my_nested_table := my_nested_table (9,18,27,36,45,54,63,72,81,90);
+BEGIN
+    IF var_nt.count >= 10 THEN
+        DBMS_OUTPUT.PUT_LINE (‘you have already inserted 10 elements in your Nested table.');
+        DBMS_OUTPUT.PUT_LINE ('Are you sure you want to insert more?');
+    END IF;
+END;
+/
+
+2.EXISTS -->Collection Method EXISTS ( ) checks the existence of an element at a specific index in a collection.  If it finds the specified element then it returns TRUE otherwise it returns FALSE.
+
+SET SERVEROUTPUT ON;
+DECLARE
+        --Declare a local Nested Table
+        TYPE my_nested_table IS TABLE OF VARCHAR2 (20);
+ --Declare collection variable and initialize the collection.   
+col_var_1   my_nested_table := my_nested_table('Super Man','Iron Man','Bat Man');
+BEGIN                  --(1) is index
+    IF col_var_1.EXISTS (1) THEN
+        DBMS_OUTPUT.PUT_LINE ('Hey we found '||col_var_1 (1));
+    ELSE
+        DBMS_OUTPUT.PUT_LINE ('Sorry, no data at this INDEX');
+    END IF;
+END;
+/  
+
+3.First and Last
+
+We use collection functions First & Last to know the first and last index defined in a collection.
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE nt_tab IS TABLE OF NUMBER;
+    col_var nt_tab := nt_tab(10, 20, 30, 40, 50);
+BEGIN
+    DBMS_OUTPUT.PUT_LINE ('First Index of the Nested table is ' || col_var.FIRST);
+    DBMS_OUTPUT.PUT_LINE ('Last Index of the Nested table is ' || col_var.LAST);
+END;
+/
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE nt_tab IS TABLE OF NUMBER;
+    col_var nt_tab := nt_tab(10, 20, 30, 40, 50);
+BEGIN
+col_var.DELETE(1);
+    DBMS_OUTPUT.PUT_LINE ('First Index after DELETE is ' || col_var.FIRST);
+END;
+/
+
+Can we see the data stored into the indexes of the collection using FIRST and LAST collection methods?
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE nt_tab IS TABLE OF NUMBER;
+    col_var nt_tab := nt_tab(10, 20, 30, 40, 50);
+BEGIN
+    -- This output statement will return 10 which is the value stored at the first index
+    DBMS_OUTPUT.PUT_LINE ('Value stored at First Index is ' || col_var(col_var.FIRST));
+    -- This output statement will return 50 which is the value stored at the last index
+    DBMS_OUTPUT.PUT_LINE ('Value stored at First Index is ' || col_var(col_var.LAST));
+END;
+/
+
+4.LIMIT (only works for varray)
+
+Collection method LIMIT which is actually a PL/SQL function returns the maximum number of elements that a VARRAY can hold. This means that by using this function you can find out how many elements you can store in a VARRAY.
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE inBlock_vry IS VARRAY (5) OF NUMBER;
+    vry_obj inBlock_vry := inBlock_vry();
+BEGIN
+ --Let's find out total number of indexes in the above VARRAY
+    DBMS_OUTPUT.PUT_LINE ('Total Indexes '||vry_obj.LIMIT);
+END;
+/
+
+SET SERVEROUTPUT ON;
+DECLARE
+    --Create VARRAY of 5 element
+    TYPE inblock_vry IS
+        VARRAY ( 5 ) OF NUMBER;
+    vry_obj   inblock_vry := inblock_vry ();
+BEGIN
+    --Insert into VARRAY
+        vry_obj.extend;
+        vry_obj(1) := 10 * 2; 
+dbms_output.put_line('Total Number of Index ' || vry_obj.limit);
+dbms_output.put_line('Total Number of Index which are occupied ' || vry_obj.count);
+END;
+/
+
+5.PRIOR and NEXT
+
+For example PL/SQL collection method PRIOR takes an index as input and returns the value stored into the previous lowest index. Whereas the collection method NEXT returns the value from the next higher index.
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE my_nested_table IS
+        TABLE OF NUMBER;
+    var_nt   my_nested_table := my_nested_table(9,18,27,36,45,54,63,72,81,90);
+BEGIN
+        dbms_output.put_line('Index prior to index 3 is '||var_nt.PRIOR(3)); 
+        dbms_output.put_line('Value before 3rd Index is '||var_nt(var_nt.PRIOR(3))); 
+END;
+/
+
+DECLARE
+    TYPE my_nested_table IS
+        TABLE OF NUMBER;
+    var_nt   my_nested_table := my_nested_table(9,18,27,36,45,54,63,72,81,90);
+BEGIN
+        dbms_output.put_line('Next Higher Index to index 3 is '||var_nt.NEXT(3)); 
+        dbms_output.put_line('Value after 3rd Index is '||var_nt(var_nt.NEXT(3))); 
+END;
+/
+
+DECLARE
+    TYPE my_nested_table IS
+        TABLE OF NUMBER;
+    var_nt   my_nested_table := my_nested_table(9,18,27,36,45,54,63,72,81,90);
+BEGIN
+        var_nt.DELETE(2);
+        dbms_output.put_line('Index prior to index 3 is '||var_nt.PRIOR(3)); 
+        dbms_output.put_line('Value before 3rd Index is '||var_nt(var_nt.PRIOR(3))); 
+END;
+/
+
+5.Delete->Collection method DELETE is an overloaded procedure which removes elements from the collection.
+
+
+DECLARE
+    TYPE my_nested_table IS
+        TABLE OF NUMBER;
+    var_nt my_nested_table := my_nested_table(2,4,6,8,10,12,14,16,18,20);
+BEGIN
+ 
+    --Range Delete
+    var_nt.DELETE(1);
+    FOR i IN 1..var_nt.LAST LOOP
+        IF var_nt.EXISTS(i) THEN
+            DBMS_OUTPUT.PUT_LINE('Value at Index ['||i||'] is '|| var_nt(i));
+        END IF;
+    END LOOP;
+END;
+/
+
+
+DECLARE
+    TYPE my_nested_table IS
+        TABLE OF NUMBER;
+    var_nt my_nested_table := my_nested_table(2,4,6,8,10,12,14,16,18,20);
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('After Deleted');
+    --Delete Specific Index
+    var_nt.DELETE(5);
+    IF var_nt.EXISTS(5) THEN
+            DBMS_OUTPUT.PUT_LINE('Value at Index [5] is '|| var_nt(5));
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Data is Deleted');
+    END IF;
+END;
+/
+
+--deletes in range
+DECLARE
+    TYPE my_nested_table IS
+        TABLE OF NUMBER;
+    var_nt my_nested_table := my_nested_table(2,4,6,8,10,12,14,16,18,20);
+BEGIN
+ 
+    --Delete Range
+    var_nt.DELETE(2,6);
+    FOR i IN 1..var_nt.LAST LOOP
+        IF var_nt.EXISTS(i) THEN
+            DBMS_OUTPUT.PUT_LINE('Value at Index ['||i||'] is '|| var_nt(i));
+        END IF;
+    END LOOP;
+END;
+/
+
+6.EXTEND
+
+Extend: Extend procedure call without any argument.
+Calling PL/SQL Collection procedure Extend without any argument will append a single NULL element to the collection.
+
+Extend (n): Extend procedure call with one argument.
+Collection procedure Extend with one argument will append the number of NULL elements that you mentioned as the argument of the procedure. But, remember that the argument must be a valid Integer value.
+
+Extend (n, v): Extend procedure call with two arguments.
+In this case the first argument indicates the number of elements that will be appended to the collection. Moreover the second argument is the index number. Moreover it’s value will be copied and assigned to each of the newly appended elements of the collection. This form of EXTEND is required for collections with “not null elements”.
+
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE my_nestedTable IS TABLE OF number;
+    nt_obj  my_nestedTable := my_nestedTable();
+BEGIN
+    nt_obj.EXTEND;
+    nt_obj(1) := 10;
+    DBMS_OUTPUT.PUT_LINE ('Data at index 1 is '||nt_obj(1));
+END;
+/
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE my_nestedTable IS TABLE OF number;
+    nt_obj  my_nestedTable := my_nestedTable();
+BEGIN
+    nt_obj.EXTEND(3);
+    nt_obj(1) := 10;
+    nt_obj(2) := 20;
+    nt_obj(3) := 30;
+    DBMS_OUTPUT.PUT_LINE ('Data at index 1 is '||nt_obj(1));
+    DBMS_OUTPUT.PUT_LINE ('Data at index 2 is '||nt_obj(2)); 
+    DBMS_OUTPUT.PUT_LINE ('Data at index 3 is '||nt_obj(3));
+END;
+/
+
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE my_nestedTable IS TABLE OF number;
+    nt_obj  my_nestedTable := my_nestedTable();
+BEGIN
+    nt_obj.EXTEND;
+    nt_obj(1) := 28;
+    DBMS_OUTPUT.PUT_LINE ('Data at index 1 is '||nt_obj(1));
+    nt_obj.EXTEND(5,1);
+    DBMS_OUTPUT.PUT_LINE ('Data at index 4 is '||nt_obj(4));
+END;
+/
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE my_Varray IS VARRAY (5) OF NUMBER;
+    vry_obj my_Varray := my_Varray();
+BEGIN
+    vry_obj.EXTEND;
+    vry_obj(1) := 10;
+    DBMS_OUTPUT.PUT_LINE('Data at index 1 is '||vry_obj(1));
+END;
+/
+
+7.TRIM
+
+TRIM: Trim procedure without parameter.
+If we use TRIM procedure without any parameters then it will remove only one element from the end of the collection.
+
+TRIM: Trim procedure with one parameter.
+TRIM procedure called by passing one argument will remove number of elements from the end of the collection as specified by the parameter. That parameter must be a valid Integer number. Also it should not be greater than the maximum number of elements that your collection has.
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE my_nestedTable IS TABLE OF number;
+    nt_obj  my_nestedTable := my_nestedTable(1,2,3,4,5);
+BEGIN
+    nt_obj.TRIM;
+    DBMS_OUTPUT.PUT_LINE ('After TRIM procedure');
+    FOR i IN 1..nt_obj.COUNT
+    LOOP
+        DBMS_OUTPUT.PUT_LINE (nt_obj (i));
+    END LOOP;
+END;
+/ 
+
+SET SERVEROUTPUT ON;
+DECLARE
+    TYPE my_nestedTable IS TABLE OF number;
+    nt_obj  my_nestedTable := my_nestedTable(1,2,3,4,5);
+BEGIN
+    nt_obj.TRIM (3);
+    DBMS_OUTPUT.PUT_LINE ('After TRIM procedure');
+    FOR i IN 1..nt_obj.COUNT
+    LOOP
+        DBMS_OUTPUT.PUT_LINE (nt_obj(i));
+    END LOOP;
+END;
+/
+
+
+SET SERVEROUTPUT ON;
+DECLARE
+ TYPE inBlock_vry IS VARRAY (5) OF NUMBER;
+ vry_obj inBlock_vry := inBlock_vry(1, 2, 3, 4, 5);
+BEGIN
+    --TRIM without parameter
+    vry_obj.TRIM;
+    DBMS_OUTPUT.PUT_LINE ('After TRIM procedure');
+    FOR i IN 1..vry_obj.COUNT
+    LOOP
+        DBMS_OUTPUT.PUT_LINE (vry_obj(i));
+    END LOOP;
+    --TRIM with Parameter
+    vry_obj.TRIM (2);
+    DBMS_OUTPUT.PUT_LINE ('After TRIM procedure');
+    FOR i IN 1..vry_obj.COUNT
+    LOOP
+        DBMS_OUTPUT.PUT_LINE (vry_obj(i));
+    END LOOP;
+END;
+/
