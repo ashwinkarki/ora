@@ -23,6 +23,7 @@ DECLARE
     BEGIN
     vry_obj.EXTEND(1); 
     vry_obj(1):= 10*2;
+     vry_obj.EXTEND(1); 
     vry_obj(2) :=10*3;
     DBMS_OUTPUT.PUT_LINE(vry_obj(1)); 
         DBMS_OUTPUT.PUT_LINE(vry_obj(2));       
