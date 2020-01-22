@@ -1,0 +1,29 @@
+--same memid but different other columns
+select e.*
+from ot.elig e
+where exists (select 1 
+              from ot.elig e1 
+              where e1.memid = e.memid and 
+                    (e.memfirstname <> e1.memfirstname or 
+                     e.memlastname <> e1.memlastname
+                    )
+             );
+             
+             select e.*
+from ot.elig e
+inner join (
+    select memid
+    from ot.elig
+    group by memid
+    having count(distinct memfirstname) > 1 or count(distinct memlastname) > 1
+) g on g.memid = e.memid
+
+--different memid but same other colmuns
+
+select * from ot.elig where (enrid,memfirstname,memlastname,dob,gender,relflag) IN 
+(select enrid,memfirstname,memlastname,dob,gender,relflag from ot.elig group by enrid,memfirstname,memlastname,dob,gender,relflag having count(distinct memid)>1);
+
+--twin case
+select * from ot.elig where (memid,enrid,memlastname,dob,gender,relflag) IN 
+(select memid,enrid,memlastname,dob,gender,relflag from ot.elig group by memid,enrid,memlastname,dob,gender,relflag having count(distinct memfirstname)>1);
+
