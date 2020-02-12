@@ -1,0 +1,15 @@
+SET SERVEROUTPUT ON;
+DECLARE
+  TYPE rv_dept IS RECORD(
+    f_name  VARCHAR2(20),
+    d_name  ot.employees.last_name%type 
+  );
+  var1 rv_dept;
+BEGIN  
+  SELECT first_name,last_name  
+  INTO var1.f_name,var1.d_name
+  FROM employees WHERE employee_id = 1;
+   
+  DBMS_OUTPUT.PUT_LINE(var1.f_name||' '||var1.d_name);
+END;
+/

@@ -1,0 +1,43 @@
+CREATE OR REPLACE PACKAGE OT.PK_TEST1 IS
+PROCEDURE main;
+PROCEDURE A;
+PROCEDURE B;
+END PK_TEST1;
+
+
+CREATE OR REPLACE PACKAGE BODY  oT.PK_TEST1 IS
+PROCEDURE main 
+IS
+l_job number;
+BEGIN
+  dbms_job.submit(l_job, 'oT.PK_TEST1.A;', sysdate, null);
+  dbms_job.submit(l_job, 'oT.PK_TEST1.B;', sysdate, null);
+  commit; 
+
+
+END main;
+PROCEDURE A 
+IS
+BEGIN
+
+dbms_output.put_line('enterd in a');
+dbms_lock.sleep(1);
+insert into ot.test (proc, datum) values ('p1', sysdate);
+
+END A;
+PROCEDURE B 
+IS
+BEGIN
+ dbms_lock.sleep(15);
+dbms_output.put_line('enterd in b');
+   insert into ot.test (proc, datum) values ('p2', sysdate);
+END B;
+END PK_TEST1;
+
+EXEC PK_TEST1.main;
+
+---select * from ot.test;
+--select job, next_date, what from user_jobs;
+
+
+select proc, to_char(datum, 'dd.mm.yyyy hh24:mi:ss') datum From ot.test;

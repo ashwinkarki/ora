@@ -1,0 +1,2 @@
+select * from (
+select 'welcome' col1,'to' col2,'nepal' col3 from dual) UNPIVOT(col_val for column_name IN (col1,col2,col3));

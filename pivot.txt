@@ -1,0 +1,3 @@
+select * from (
+select job,deptno,sal from ot.empash) pivot (sum(sal),count(*) cnt
+for deptno in (10,20,30));
