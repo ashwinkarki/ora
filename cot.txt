@@ -1,4 +1,4 @@
---same memid but different other columns
+--same memid but different other columns(also shows twin case in it)
 select e.*
 from ot.elig e
 where exists (select 1 
