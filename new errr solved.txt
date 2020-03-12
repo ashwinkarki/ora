@@ -1,0 +1,17 @@
+declare
+  vquery varchar2(32767);
+  cursor c1 is select * from config1;
+begin
+  for i in c1 loop
+    vquery :='INSERT INTO all_acc_num(code,nbr_value) 
+              select '''||replace(i.acct_nbr, '''', '''''')||''', '||i.acct_nbr||' from ot.stu a';
+    dbms_output.put_line(vquery);
+    -- execute immediate vquery;
+  end loop;
+end;
+
+
+with your_Data as
+   (select 'EXISTS(SELECT 1 from a where SUBSTR(a.hehrircal,1,4)=b.acc_num' as str from dual)
+    SELECT SUBSTR(STR, INSTR(STR, 'where') + 5, INSTR(STR, '=') -(INSTR(STR, 'where') + 5))
+    FROM YOUR_DATA;
