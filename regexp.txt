@@ -1,0 +1,6 @@
+regexp_replace(nm, '[^A-Z0-9 ]', '') 
+
+--remove whitespace
+
+SELECT REGEXP_REPLACE(mydata, '\s+$') AS mydata
+  FROM mytable

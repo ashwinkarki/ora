@@ -1,0 +1,4 @@
+select * from all_constraints
+where owner = '<NAME>'
+and constraint_name = 'SYS_C00381400'
+/
